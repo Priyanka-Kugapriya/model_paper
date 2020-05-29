@@ -37,15 +37,15 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + UserProfile.Users.TABLE_NAME + " (" +
+            "CREATE TABLE " + UserProfile.Users.UserInfo  + " (" +
                     UserProfile.Users._ID + " INTEGER PRIMARY KEY," +
-                    UserProfile.Users.COLUMN_1 + " TEXT," +
-                    UserProfile.Users.COLUMN_2 + " TEXT," +
+                    UserProfile.Users.userName  + " TEXT," +
+                    UserProfile.Users.dateOfBirth  + " TEXT," +
                     UserProfile.Users.COLUMN_3 + " TEXT," +
-                    UserProfile.Users.COLUMN_4 + " TEXT)";
+                    UserProfile.Users.Gender  + " TEXT)";
 
     private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + UserProfile.Users.TABLE_NAME;
+            "DROP TABLE IF EXISTS " + UserProfile.Users.UserInfo;
 
 
 
@@ -55,13 +55,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         ContentValues values = new ContentValues();
-        values.put(UserProfile.Users.COLUMN_1, username);
-        values.put(UserProfile.Users.COLUMN_2, dob);
+        values.put(UserProfile.Users.userName , username);
+        values.put(UserProfile.Users.dateOfBirth , dob);
         values.put(UserProfile.Users.COLUMN_3, password);
-        values.put(UserProfile.Users.COLUMN_4, gender);
+        values.put(UserProfile.Users.Gender , gender);
 
 
-        long newRowId = db.insert(UserProfile.Users.TABLE_NAME, null, values);
+        long newRowId = db.insert(UserProfile.Users.UserInfo , null, values);
 
         return newRowId;
 
@@ -73,16 +73,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         ContentValues values = new ContentValues();
-        values.put(UserProfile.Users.COLUMN_2, dob);
+        values.put(UserProfile.Users.dateOfBirth , dob);
         values.put(UserProfile.Users.COLUMN_3, password);
-        values.put(UserProfile.Users.COLUMN_4, gender);
+        values.put(UserProfile.Users.Gender , gender);
 
 
-        String selection = UserProfile.Users.COLUMN_1 + " LIKE ?";
+        String selection = UserProfile.Users.userName  + " LIKE ?";
         String[] selectionArgs = { username };
 
         int count = db.update(
-                UserProfile.Users.TABLE_NAME,
+                UserProfile.Users.UserInfo ,
                 values,
                 selection,
                 selectionArgs);
@@ -101,11 +101,11 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
 
 
-        String selection = UserProfile.Users.COLUMN_1 + " LIKE ?";
+        String selection = UserProfile.Users.userName  + " LIKE ?";
 
         String[] selectionArgs = { username };
 
-        int deletedRows = db.delete(UserProfile.Users.TABLE_NAME, selection, selectionArgs);
+        int deletedRows = db.delete(UserProfile.Users.UserInfo , selection, selectionArgs);
 
 
     }
@@ -118,22 +118,22 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String[] projection = {
                 BaseColumns._ID,
-                UserProfile.Users.COLUMN_1,
-                UserProfile.Users.COLUMN_2,
+                UserProfile.Users.userName ,
+                UserProfile.Users.dateOfBirth ,
                 UserProfile.Users.COLUMN_3,
-                UserProfile.Users.COLUMN_4
+                UserProfile.Users.Gender
         };
 
 
-        String selection = UserProfile.Users.COLUMN_1 + " = ?";
+        String selection = UserProfile.Users.userName  + " = ?";
         String[] selectionArgs = { username };
 
 
         String sortOrder =
-                UserProfile.Users.COLUMN_1 + " ASC";
+                UserProfile.Users.userName  + " ASC";
 
         Cursor cursor = db.query(
-                UserProfile.Users.TABLE_NAME,   // The table to query
+                UserProfile.Users.UserInfo ,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 null,              // The columns for the WHERE clause
                 null,          // The values for the WHERE clause
@@ -144,7 +144,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         List usernames = new ArrayList<>();
         while(cursor.moveToNext()) {
-            String user = cursor.getString(cursor.getColumnIndexOrThrow(UserProfile.Users.COLUMN_1));
+            String user = cursor.getString(cursor.getColumnIndexOrThrow(UserProfile.Users.userName ));
             usernames.add(user);
         }
         cursor.close();
@@ -158,22 +158,22 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String[] projection = {
                 BaseColumns._ID,
-                UserProfile.Users.COLUMN_1,
-                UserProfile.Users.COLUMN_2,
+                UserProfile.Users.userName ,
+                UserProfile.Users.dateOfBirth ,
                 UserProfile.Users.COLUMN_3,
-                UserProfile.Users.COLUMN_4
+                UserProfile.Users.Gender
         };
 
 
-        String selection = UserProfile.Users.COLUMN_1 + " LIKE ?";
+        String selection = UserProfile.Users.userName + " LIKE ?";
         String[] selectionArgs = { username };
 
         // How you want the results sorted in the resulting Cursor
         String sortOrder =
-                UserProfile.Users.COLUMN_1 + " ASC";
+                UserProfile.Users.userName + " ASC";
 
         Cursor cursor = db.query(
-                UserProfile.Users.TABLE_NAME,
+                UserProfile.Users.UserInfo ,
                 projection,
                 selection,
                 selectionArgs,
@@ -184,10 +184,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
         List userInfo = new ArrayList<>();
         while(cursor.moveToNext()) {
-            String user = cursor.getString(cursor.getColumnIndexOrThrow(UserProfile.Users.COLUMN_1));
-            String dob = cursor.getString(cursor.getColumnIndexOrThrow(UserProfile.Users.COLUMN_2));
+            String user = cursor.getString(cursor.getColumnIndexOrThrow(UserProfile.Users.userName ));
+            String dob = cursor.getString(cursor.getColumnIndexOrThrow(UserProfile.Users.dateOfBirth ));
             String pass = cursor.getString(cursor.getColumnIndexOrThrow(UserProfile.Users.COLUMN_3));
-            String gender = cursor.getString(cursor.getColumnIndexOrThrow(UserProfile.Users.COLUMN_4));
+            String gender = cursor.getString(cursor.getColumnIndexOrThrow(UserProfile.Users.Gender ));
             userInfo.add(user);//0
             userInfo.add(dob);//1
             userInfo.add(pass);//2

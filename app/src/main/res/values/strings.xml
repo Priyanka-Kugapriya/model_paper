@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Test</string>
+    <string name="usr_nme">User Name</string>
+    <string name="pass">Password</string>
+    <string name="lgn">Login</string>
+    <string name="rgstr">Register</string>
+    <string name="d0b">Date of Birth</string>
+    <string name="gndr">Gender</string>
+    <string name="mle">Male</string>
+    <string name="fml">Female</string>
+    <string name="upd">Update Profile</string>
+    <string name="edit">Edit</string>
+    <string name="srch">Search</string>
+    <string name="del">Delete</string>
+    <string name="add">Add</string>
+</resources>
+
